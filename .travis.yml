@@ -52,10 +52,18 @@ before_script:
       typo3/cms-frontend="$TYPO3_VERSION" \
       typo3/cms-install="$TYPO3_VERSION" \
       typo3/cms-scheduler="$TYPO3_VERSION" \
+      helhum/typo3-console
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
+  - |
+    echo;
+    echo "Create LocalConfiguration.php";
+    cat > .Build/Web/typo3conf/LocalConfiguration.php << EOF
+    <?php
+    return [];
+    EOF
   - >
     echo;
     echo "Running php lint...";
