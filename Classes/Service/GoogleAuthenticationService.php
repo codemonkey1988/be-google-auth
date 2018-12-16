@@ -87,8 +87,7 @@ class GoogleAuthenticationService extends AbstractService
         $userRecord = $userProvider->getUserByEmail($this->googleResponse['email']);
 
         if (!empty($userRecord) && is_array($userRecord)) {
-            $message = sprintf('User \'%s\' logged in with google login \'%s\'', $userRecord['username'], $this->googleResponse['email']);
-            $this->log(0, $message);
+            $this->log(0, 1, 'User \'%s\' logged in with google login \'%s\'', [$userRecord['username'], $this->googleResponse['email']]);
         } elseif ($gsuite->enabled() && $gsuite->isGsuiteUser($this->googleResponse) && $gsuite->isInOrganisation($this->googleResponse)) {
             $userRecordWithoutRestrictions = $userProvider->getUserByEmail($this->googleResponse['email'], false);
 
@@ -98,13 +97,11 @@ class GoogleAuthenticationService extends AbstractService
             } elseif ($userRecordWithoutRestrictions['deleted'] === 1) {
                 $userProvider->restoreUser($userRecordWithoutRestrictions['uid']);
 
-                $message = sprintf('A deleted user \'%s\' is logging in using google login. Restore user (undelete).', $this->googleResponse['email']);
-                $this->log(0, $message);
+                $this->log(0, 1, 'A deleted user \'%s\' is logging in using google login. Restore user (undelete).', [$this->googleResponse['email']]);
 
                 $userRecord = $this->getUser();
             } else {
-                $message = sprintf('A disabled user \'%s\' is trying to login in using google login. Update user data', $this->googleResponse['email']);
-                $this->log(3, $message);
+                $this->log(3, 3, 'A disabled user \'%s\' is trying to login in using google login. Update user data', [$this->googleResponse['email']]);
             }
         }
 
@@ -125,10 +122,10 @@ class GoogleAuthenticationService extends AbstractService
             if ($this->googleResponse['email'] === $userRecord['email']) {
                 $result = 200;
             } else {
-                $this->log(0, 'Google oAuth login failed. Google email address does not match users email address.');
+                $this->log(3, 3, 'Google oAuth login failed. Google email address does not match users email address.');
             }
         } else {
-            $this->log(0, 'Google oAuth login failed. Could not fetch google response.');
+            $this->log(0, 1, 'Google oAuth login failed. Could not fetch google response.');
         }
 
         return $result;
@@ -160,13 +157,14 @@ class GoogleAuthenticationService extends AbstractService
 
     /**
      * @param int $level Flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
+     * @param int $action 1 = login, 2 = logout, 3 = failed login
      * @param string $message
      * @param array $data
      */
-    protected function log(int $level, string $message, array $data = [])
+    protected function log(int $level, int $action, string $message, array $data = [])
     {
         if ($this->parentObject instanceof BackendUserAuthentication) {
-            $this->parentObject->writelog(255, 3, $level, 0, $message, $data);
+            $this->parentObject->writelog(255, $action, $level, 0, $message, $data);
         }
     }
 }
