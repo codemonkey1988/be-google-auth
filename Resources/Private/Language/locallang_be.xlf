@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-12-11T18:41:41Z" product-name="be_google_auth">
+		<header/>
+		<body>
+			<trans-unit id="backendLogin.switch.label" xml:space="preserve">
+				<source>Login with Google</source>
+			</trans-unit>
+			<trans-unit id="google.disconnect" xml:space="preserve">
+				<source>Disconnect</source>
+			</trans-unit>
+
+			<trans-unit id="em.category.gsuite" xml:space="preserve">
+				<source>GSuite</source>
+			</trans-unit>
+			<trans-unit id="em.basic.clientId" xml:space="preserve">
+				<source>Google Client ID</source>
+			</trans-unit>
+			<trans-unit id="em.gsuite.enable" xml:space="preserve">
+				<source>Enable Google GSuite features</source>
+			</trans-unit>
+			<trans-unit id="em.gsuite.organisations" xml:space="preserve">
+				<source>Organisations:A comma-separated list of organisations. All users assigned to one of that organisation are able to login.</source>
+			</trans-unit>
+			<trans-unit id="em.gsuite.adminByDefault" xml:space="preserve">
+				<source>Create admin users by default:If enabled, all signed in users will be admins. Use with caution!</source>
+			</trans-unit>
+			<trans-unit id="em.gsuite.beUserGroupUids" xml:space="preserve">
+				<source>Backend user group uids:A comma-separated list of backend user uids to assign (works only if adminByDefault if disabled)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

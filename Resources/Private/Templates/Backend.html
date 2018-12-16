@@ -1,0 +1,40 @@
+<f:layout name="Login"/>
+
+<f:section name="loginFormFields">
+    <f:form.hidden name="google_token" value="" id="google-token" />
+
+    <h1>{f:translate(key:'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:backendLogin.switch.label')}</h1>
+
+    <div id="google-signin-button" class="g-signin2" data-onsuccess="onSuccess"></div>
+    <div id="google-signed-in" class="row" style="display: none">
+        <div class="col-xs-4">
+            <img id="google-profile-image" src="" class="img-responsive img-circle"/>
+        </div>
+        <div class="col-xs-8">
+            <p id="google-profile-email"></p>
+            <div id="google-info-links">
+                <a href="#" class="btn btn-info" onclick="disconnect();">{f:translate(key:'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:google.disconnect')}</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript">
+        function onSuccess(googleUser) {
+            var profile = googleUser.getBasicProfile();
+
+            document.getElementById('google-token').value = googleUser.getAuthResponse().id_token;
+            document.getElementById('google-profile-email').innerHTML = profile.getEmail();
+            if (profile.getImageUrl() == null) {
+                document.getElementById("google-profile-image").style.display = "none";
+            } else {
+                document.getElementById("google-profile-image").src = profile.getImageUrl();
+            }
+
+            document.getElementById('google-signin-button').style.display = 'none';
+            document.getElementById('google-signed-in').removeAttribute('style');
+
+        }
+    </script>
+</f:section>
