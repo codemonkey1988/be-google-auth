@@ -12,6 +12,11 @@ class ExtensionConfiguration
     protected $clientId;
 
     /**
+     * @var bool
+     */
+    protected $log;
+
+    /**
      * @var GsuiteConfiguration
      */
     protected $gsuite;
@@ -19,6 +24,7 @@ class ExtensionConfiguration
     public function __construct(array $configuration)
     {
         $this->clientId = (string)$configuration['clientId'] ?? '';
+        $this->log = isset($configuration['log']) ? !empty($configuration['log']) : true;
         $this->gsuite = GeneralUtility::makeInstance(GsuiteConfiguration::class, (array)$configuration['gsuite.'] ?? []);
     }
 
@@ -28,6 +34,14 @@ class ExtensionConfiguration
     public function getClientId(): string
     {
         return $this->clientId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLog(): bool
+    {
+        return $this->log;
     }
 
     /**

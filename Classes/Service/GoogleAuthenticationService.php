@@ -163,7 +163,9 @@ class GoogleAuthenticationService extends AbstractService
      */
     protected function log(int $level, int $action, string $message, array $data = [])
     {
-        if ($this->parentObject instanceof BackendUserAuthentication) {
+        $configuration = $this->getConfigurationService()->getConfiguration();
+
+        if ($this->parentObject instanceof BackendUserAuthentication && $configuration->isLog()) {
             $this->parentObject->writelog(255, $action, $level, 0, $message, $data);
         }
     }

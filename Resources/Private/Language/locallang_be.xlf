@@ -16,6 +16,9 @@
 			<trans-unit id="em.basic.clientId" xml:space="preserve">
 				<source>Google Client ID</source>
 			</trans-unit>
+			<trans-unit id="em.basic.log" xml:space="preserve">
+				<source>Enable logging:Enables additional logging to system log during login process.</source>
+			</trans-unit>
 			<trans-unit id="em.gsuite.enable" xml:space="preserve">
 				<source>Enable Google GSuite features</source>
 			</trans-unit>

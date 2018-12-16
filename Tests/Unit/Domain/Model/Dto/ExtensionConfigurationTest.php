@@ -16,6 +16,7 @@ class ExtensionConfigurationTest extends UnitTestCase
         $subject = new ExtensionConfiguration([]);
 
         $this->assertSame('', $subject->getClientId());
+        $this->assertTrue($subject->isLog());
         $this->assertInstanceOf(GsuiteConfiguration::class, $subject->getGsuite());
     }
 
@@ -26,8 +27,10 @@ class ExtensionConfigurationTest extends UnitTestCase
     {
         $subject = new ExtensionConfiguration([
             'clientId' => '12345',
+            'log' => '0',
         ]);
 
         $this->assertSame('12345', $subject->getClientId());
+        $this->assertFalse($subject->isLog());
     }
 }
