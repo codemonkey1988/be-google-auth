@@ -32,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Codemonkey1988\\BeGoogleAuth\\Tests": "Tests"
+      "Codemonkey1988\\BeGoogleAuth\\Tests\\": "Tests"
     }
   },
   "replace": {
