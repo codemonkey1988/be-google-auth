@@ -14,7 +14,7 @@ class GoogleAuthenticationServiceTest extends UnitTestCase
      */
     public function authUserWithInvalidGoogleResponse()
     {
-        $subject = new GoogleAuthenticationService();
+        $subject = $this->getAccessibleMock(GoogleAuthenticationService::class, ['log']);
 
         $this->assertSame(100, $subject->authUser([]));
     }
@@ -32,7 +32,7 @@ class GoogleAuthenticationServiceTest extends UnitTestCase
             ->willReturn(['email' => $email]);
         $backendUserAuthentication = new BackendUserAuthentication();
 
-        $subject = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken']);
+        $subject = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken', 'log']);
         $subject
             ->expects($this->once())
             ->method('getGoogleClient')

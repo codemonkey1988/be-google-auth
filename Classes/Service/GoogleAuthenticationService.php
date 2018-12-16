@@ -7,6 +7,7 @@ use Codemonkey1988\BeGoogleAuth\Google\Gsuite;
 use Codemonkey1988\BeGoogleAuth\Google\InvalidClientResponseException;
 use Codemonkey1988\BeGoogleAuth\UserProvider\BackendUserProvider;
 use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Service\AbstractService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -33,6 +34,11 @@ class GoogleAuthenticationService extends AbstractService
     protected $authenticationInformation = [];
 
     /**
+     * @var AbstractUserAuthentication
+     */
+    protected $parentObject;
+
+    /**
      * Initializes authentication for this service.
      *
      * @param string $subType : Subtype for authentication (either "getUserFE" or "getUserBE")
@@ -46,6 +52,7 @@ class GoogleAuthenticationService extends AbstractService
         // Store login and authentication data
         $this->loginData = $loginData;
         $this->authenticationInformation = $authenticationInformation;
+        $this->parentObject = $parentObject;
 
         $token = $this->getToken();
         if ($token) {
@@ -81,7 +88,7 @@ class GoogleAuthenticationService extends AbstractService
 
         if (!empty($userRecord) && is_array($userRecord)) {
             $message = sprintf('User \'%s\' logged in with google login \'%s\'', $userRecord['username'], $this->googleResponse['email']);
-            GeneralUtility::sysLog($message, self::EXTKEY, GeneralUtility::SYSLOG_SEVERITY_NOTICE);
+            $this->log(0, $message);
         } elseif ($gsuite->enabled() && $gsuite->isGsuiteUser($this->googleResponse) && $gsuite->isInOrganisation($this->googleResponse)) {
             $userRecordWithoutRestrictions = $userProvider->getUserByEmail($this->googleResponse['email'], false);
 
@@ -92,12 +99,12 @@ class GoogleAuthenticationService extends AbstractService
                 $userProvider->restoreUser($userRecordWithoutRestrictions['uid']);
 
                 $message = sprintf('A deleted user \'%s\' is logging in using google login. Restore user (undelete).', $this->googleResponse['email']);
-                GeneralUtility::sysLog($message, self::EXTKEY, GeneralUtility::SYSLOG_SEVERITY_NOTICE);
+                $this->log(0, $message);
 
                 $userRecord = $this->getUser();
             } else {
                 $message = sprintf('A disabled user \'%s\' is trying to login in using google login. Update user data', $this->googleResponse['email']);
-                GeneralUtility::sysLog($message, self::EXTKEY, GeneralUtility::SYSLOG_SEVERITY_ERROR);
+                $this->log(3, $message);
             }
         }
 
@@ -118,10 +125,10 @@ class GoogleAuthenticationService extends AbstractService
             if ($this->googleResponse['email'] === $userRecord['email']) {
                 $result = 200;
             } else {
-                GeneralUtility::sysLog('Google oAuth login failed. Google email address does not match users email address.', self::EXTKEY, GeneralUtility::SYSLOG_SEVERITY_NOTICE);
+                $this->log(0, 'Google oAuth login failed. Google email address does not match users email address.');
             }
         } else {
-            GeneralUtility::sysLog('Google oAuth login failed. Could not fetch google response.', self::EXTKEY, GeneralUtility::SYSLOG_SEVERITY_NOTICE);
+            $this->log(0, 'Google oAuth login failed. Could not fetch google response.');
         }
 
         return $result;
@@ -149,5 +156,17 @@ class GoogleAuthenticationService extends AbstractService
     protected function getConfigurationService()
     {
         return GeneralUtility::makeInstance(ConfigurationService::class);
+    }
+
+    /**
+     * @param int $level Flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
+     * @param string $message
+     * @param array $data
+     */
+    protected function log(int $level, string $message, array $data = [])
+    {
+        if ($this->parentObject instanceof BackendUserAuthentication) {
+            $this->parentObject->writelog(255, 3, $level, 0, $message, $data);
+        }
     }
 }
