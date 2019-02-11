@@ -6,7 +6,7 @@ use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-class ConfigurationServiceTest extends UnitTestCase
+class SimpleBackendUserPermissionTest extends UnitTestCase
 {
     /**
      * @test
