@@ -219,6 +219,11 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
      */
     protected function buildAuthenticationServiceMock(array $googleResponse, array $configuration = [])
     {
+        if (version_compare(TYPO3_version, '9.5.0', '<')) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['be_google_auth'] = serialize($configuration);
+        } else {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['be_google_auth'] = $configuration;
+        }
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->table);
         $restrictionContainer = GeneralUtility::makeInstance(DefaultRestrictionContainer::class);
         $restrictionContainer->add(GeneralUtility::makeInstance(RootLevelRestriction::class, [$this->table]));
@@ -235,7 +240,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
             ->method('getConfiguration')
             ->willReturn(new ExtensionConfiguration($configuration));
 
-        $authenticationService = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken', 'getConfigurationService']);
+        $authenticationService = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken']);
         $authenticationService
             ->expects($this->once())
             ->method('getGoogleClient')
@@ -244,9 +249,6 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
             ->expects($this->once())
             ->method('getToken')
             ->willReturn('12345');
-        $authenticationService
-            ->method('getConfigurationService')
-            ->willReturn($configurationServiceMock);
 
         $authenticationService->initAuth(
             '',

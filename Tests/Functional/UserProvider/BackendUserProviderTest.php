@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace Codemonkey1988\BeGoogleAuth\Tests\Functional\UserProvider;
 
-use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
 use Codemonkey1988\BeGoogleAuth\UserProvider\BackendUserProvider;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
@@ -31,7 +30,7 @@ class BackendUserProviderTest extends FunctionalTestCase
      */
     public function createNewAdminUser()
     {
-        $configurationService = $this->getExtensionServiceMock([
+        $configurationService = $this->getExtensionService([
             'gsuite.' => [
                 'adminByDefault' => '1',
             ],
@@ -63,7 +62,7 @@ class BackendUserProviderTest extends FunctionalTestCase
      */
     public function createNewNonAdminUser()
     {
-        $configurationService = $this->getExtensionServiceMock([
+        $configurationService = $this->getExtensionService([
             'gsuite.' => [
                 'adminByDefault' => '0',
                 'beUserGroupUids' => '1,2',
@@ -99,7 +98,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -117,7 +116,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -135,7 +134,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -152,7 +151,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -169,7 +168,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -187,7 +186,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
 
@@ -205,10 +204,10 @@ class BackendUserProviderTest extends FunctionalTestCase
     {
         $this->importDataSet(__DIR__ . '/../Fixtures/be_users.xml');
 
-        $configurationService = $this->getExtensionServiceMock([]);
+        $configurationService = $this->getExtensionService([]);
         $userProvider = new BackendUserProvider($this->buildAuthenticationInformation());
         $userProvider->injectConfigurationService($configurationService);
-        $userProvider->restoreUser(10);
+        $userProvider->restoreUser(['uid' => 10, 'username' => 'admin_deleted@example.com']);
 
         $user = $userProvider->getUserByEmail('admin_deleted@example.com');
 
@@ -218,17 +217,17 @@ class BackendUserProviderTest extends FunctionalTestCase
 
     /**
      * @param array $configuration
-     * @return \Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return ConfigurationService
      */
-    protected function getExtensionServiceMock(array $configuration)
+    protected function getExtensionService(array $configuration)
     {
-        $extensionConfiguration = new ExtensionConfiguration($configuration);
-        $configurationServiceMock = $this->getAccessibleMock(ConfigurationService::class, ['getConfiguration']);
-        $configurationServiceMock
-            ->method('getConfiguration')
-            ->willReturn($extensionConfiguration);
+        if (version_compare(TYPO3_version, '9.5.0', '<')) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['be_google_auth'] = serialize($configuration);
+        } else {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['be_google_auth'] = $configuration;
+        }
 
-        return $configurationServiceMock;
+        return new ConfigurationService();
     }
 
     /**

@@ -32,8 +32,8 @@ interface UserProviderInterface
     /**
      * Sets the deleted flag to 0 for the given user record uid.
      *
-     * @param int $uid
+     * @param array $userRecord
      * @return void
      */
-    public function restoreUser(int $uid);
+    public function restoreUser(array $userRecord);
 }

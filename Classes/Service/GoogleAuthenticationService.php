@@ -71,6 +71,7 @@ class GoogleAuthenticationService extends AbstractService
      * function makes sure that user cannot be authenticated by any other service
      * if user tries to use OpenID to authenticate.
      *
+     * @throws \Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException
      * @return mixed User record (content of fe_users/be_users as appropriate for the current mode)
      */
     public function getUser()
@@ -95,7 +96,7 @@ class GoogleAuthenticationService extends AbstractService
                 $userProvider->createUser($this->googleResponse['email'], $this->googleResponse['name'] ?? '');
                 $userRecord = $this->getUser();
             } elseif ($userRecordWithoutRestrictions['deleted'] === 1) {
-                $userProvider->restoreUser($userRecordWithoutRestrictions['uid']);
+                $userProvider->restoreUser($userRecordWithoutRestrictions);
 
                 $this->log(0, 1, 'A deleted user \'%s\' is logging in using google login. Restore user (undelete).', [$this->googleResponse['email']]);
 

@@ -3,6 +3,8 @@ namespace Codemonkey1988\BeGoogleAuth\UserProvider;
 
 use Codemonkey1988\BeGoogleAuth\Google\Gsuite;
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
+use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\BackendUserPermissionInterface;
+use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\StringUtility;
@@ -20,6 +22,11 @@ class BackendUserProvider implements UserProviderInterface
      * @var Gsuite
      */
     protected $gsuite;
+
+    /**
+     * @var BackendUserPermissionInterface
+     */
+    protected $permissionProvider;
 
     /**
      * AbstractUserProvider constructor.
@@ -45,10 +52,12 @@ class BackendUserProvider implements UserProviderInterface
      *
      * @param string $email
      * @param string $name
+     * @throws InvalidPermissionException
      * @return void
      */
     public function createUser(string $email, string $name)
     {
+        $permission = $this->getBackendUserPermission();
         $data = [
             'username' => $email,
             'password' => $this->generatePassword(),
@@ -60,10 +69,10 @@ class BackendUserProvider implements UserProviderInterface
             'google_oauth' => 1,
         ];
 
-        if ($this->gsuite->shouldCreateAdminUser()) {
+        if ($permission->isAdmin($email)) {
             $data['admin'] = 1;
         } else {
-            $data['usergroup'] = implode(',', $this->gsuite->getUserGroupUids());
+            $data['usergroup'] = implode(',', $permission->getUserGroupUids($email));
         }
 
         GeneralUtility::makeInstance(ConnectionPool::class)
@@ -110,14 +119,21 @@ class BackendUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param int $uid
+     * @param array $userRecord
+     * @throws InvalidPermissionException
      * @return void
      */
-    public function restoreUser(int $uid)
+    public function restoreUser(array $userRecord)
     {
+        $permission = $this->getBackendUserPermission();
+        $admin = $permission->isAdmin($userRecord['username']) ? 1 : 0;
+        $userGroupUids = $admin ? [] : $permission->getUserGroupUids($userRecord['username']);
+
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->authenticationInformation['db_user']['table']);
         $queryBuilder->update($this->authenticationInformation['db_user']['table'])
             ->set('deleted', 0)
+            ->set('admin', $admin)
+            ->set('usergroup', implode(',', $userGroupUids))
             ->execute();
     }
 
@@ -136,5 +152,31 @@ class BackendUserProvider implements UserProviderInterface
         }
 
         return $password;
+    }
+
+    /**
+     * @throws InvalidPermissionException
+     * @return BackendUserPermissionInterface
+     */
+    protected function getBackendUserPermission(): BackendUserPermissionInterface
+    {
+        if (empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider']) ||
+            !class_exists($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider'])) {
+            throw new InvalidPermissionException(
+                'No permission provider given. Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'be_google_auth\'][\'permissionProvider\']',
+                1549911875
+            );
+        }
+
+        $permission = GeneralUtility::makeInstance($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider']);
+
+        if (!$permission instanceof BackendUserPermissionInterface) {
+            throw new InvalidPermissionException(
+                'The given permission provider dies not implement "BackendUserPermissionInterface".',
+                1549912013
+            );
+        }
+
+        return $permission;
     }
 }
