@@ -144,7 +144,7 @@ class GoogleAuthenticationService extends AbstractService
      */
     protected function getToken(): string
     {
-        return GeneralUtility::_POST('google_token');
+        return (string)GeneralUtility::_POST('google_token');
     }
 
     /**
