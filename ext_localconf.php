@@ -1,9 +1,6 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider'] =
-    \Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission::class;
-
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders']['google_auth'] = [
     'provider' => \Codemonkey1988\BeGoogleAuth\LoginProvider\GoogleAuthProvider::class,
     'sorting' => 25,

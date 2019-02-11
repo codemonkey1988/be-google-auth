@@ -1,10 +1,13 @@
 <?php
 namespace Codemonkey1988\BeGoogleAuth\UserProvider;
 
+use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
 use Codemonkey1988\BeGoogleAuth\Google\Gsuite;
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
+use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\AdminByFileBackendUserPermission;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\BackendUserPermissionInterface;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException;
+use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\StringUtility;
@@ -29,6 +32,11 @@ class BackendUserProvider implements UserProviderInterface
     protected $permissionProvider;
 
     /**
+     * @var ExtensionConfiguration
+     */
+    protected $extensionConfiguration;
+
+    /**
      * AbstractUserProvider constructor.
      *
      * @param array $authenticationInformation
@@ -45,6 +53,7 @@ class BackendUserProvider implements UserProviderInterface
     {
         $this->gsuite = GeneralUtility::makeInstance(Gsuite::class);
         $this->gsuite->injectConfigurationService($configurationService);
+        $this->extensionConfiguration = $configurationService->getConfiguration();
     }
 
     /**
@@ -160,15 +169,21 @@ class BackendUserProvider implements UserProviderInterface
      */
     protected function getBackendUserPermission(): BackendUserPermissionInterface
     {
-        if (empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider']) ||
-            !class_exists($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider'])) {
-            throw new InvalidPermissionException(
-                'No permission provider given. Please check $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'be_google_auth\'][\'permissionProvider\']',
-                1549911875
-            );
+        $providerClass = null;
+
+        if ($this->extensionConfiguration->getGsuite()->isEnabled() &&
+            $this->extensionConfiguration->getGsuite()->getAdminByFilePath()) {
+            $providerClass = AdminByFileBackendUserPermission::class;
+        } else {
+            $providerClass = SimpleBackendUserPermission::class;
         }
 
-        $permission = GeneralUtility::makeInstance($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider']);
+        if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider']) &&
+            class_exists($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider'])) {
+            $providerClass = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['be_google_auth']['permissionProvider'];
+        }
+
+        $permission = GeneralUtility::makeInstance($providerClass);
 
         if (!$permission instanceof BackendUserPermissionInterface) {
             throw new InvalidPermissionException(

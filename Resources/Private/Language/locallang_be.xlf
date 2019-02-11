@@ -31,6 +31,9 @@
 			<trans-unit id="em.gsuite.beUserGroupUids" xml:space="preserve">
 				<source>Backend user group uids:A comma-separated list of backend user uids to assign (works only if adminByDefault if disabled)</source>
 			</trans-unit>
+			<trans-unit id="em.gsuite.adminByFilePath" xml:space="preserve">
+				<source>Create admin users by email address in file:A local path or url pointing to a file that contains email addresses (one per line) that should be given admin access to the system.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

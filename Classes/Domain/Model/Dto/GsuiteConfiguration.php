@@ -22,6 +22,11 @@ class GsuiteConfiguration
     protected $adminByDefault;
 
     /**
+     * @var string
+     */
+    protected $adminByFilePath;
+
+    /**
      * @var array
      */
     protected $beUserGroupUids;
@@ -32,6 +37,7 @@ class GsuiteConfiguration
         $this->organisations = $configuration['organisations'] ? GeneralUtility::trimExplode(',', (string)$configuration['organisations']) : [];
         $this->adminByDefault = (bool)$configuration['adminByDefault'] ?? false;
         $this->beUserGroupUids = $configuration['beUserGroupUids'] ? GeneralUtility::intExplode(',', (string)$configuration['beUserGroupUids']) : [];
+        $this->adminByFilePath = (string)$configuration['adminByFilePath'] ?: '';
     }
 
     /**
@@ -64,5 +70,13 @@ class GsuiteConfiguration
     public function getBeUserGroupUids(): array
     {
         return $this->beUserGroupUids;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdminByFilePath(): string
+    {
+        return $this->adminByFilePath;
     }
 }
