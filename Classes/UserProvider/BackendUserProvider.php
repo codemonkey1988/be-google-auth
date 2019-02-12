@@ -8,9 +8,9 @@ use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\AdminByFileBackendUserPe
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\BackendUserPermissionInterface;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
 use TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility;
 
@@ -153,11 +153,17 @@ class BackendUserProvider implements UserProviderInterface
      */
     protected function generatePassword(): string
     {
-        $password = StringUtility::getUniqueId('google_auth_password_') . mt_rand(1000000, 9999999);
+        $generator = new ComputerPasswordGenerator();
+        $generator
+            ->setUppercase()
+            ->setLowercase()
+            ->setNumbers()
+            ->setSymbols()
+            ->setLength(64);
 
         if (SaltedPasswordsUtility::isUsageEnabled()) {
             $objInstanceSaltedPW = SaltFactory::getSaltingInstance();
-            $password = $objInstanceSaltedPW->getHashedPassword($password);
+            $password = $objInstanceSaltedPW->getHashedPassword($generator->generatePassword());
         }
 
         return $password;
