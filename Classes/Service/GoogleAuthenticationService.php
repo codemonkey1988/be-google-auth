@@ -11,6 +11,9 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Service\AbstractService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Class GoogleAuthenticationService
+ */
 class GoogleAuthenticationService extends AbstractService
 {
     const EXTKEY = 'be_google_auth';

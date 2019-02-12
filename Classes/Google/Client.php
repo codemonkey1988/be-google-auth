@@ -5,9 +5,14 @@ namespace Codemonkey1988\BeGoogleAuth\Google;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Class Client
+ */
 class Client implements SingletonInterface
 {
     /**
+     * Fetch a user profile using the google oAuth2 API.
+     *
      * @param string $token
      * @throws InvalidClientResponseException
      * @return array

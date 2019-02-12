@@ -4,8 +4,20 @@ namespace Codemonkey1988\BeGoogleAuth\Service;
 
 use TYPO3\CMS\Sv\AuthenticationService;
 
+/**
+ * Class ExtendedAuthenticationService
+ */
 class ExtendedAuthenticationService extends AuthenticationService
 {
+    /**
+     * Override this function to prevent google oAuth2 users to use the default
+     * login mechanism.
+     *
+     * @param string $username
+     * @param string $extraWhere
+     * @param string $dbUserSetup
+     * @return bool|mixed
+     */
     public function fetchUserRecord($username, $extraWhere = '', $dbUserSetup = '')
     {
         $user = parent::fetchUserRecord($username, $extraWhere, $dbUserSetup);

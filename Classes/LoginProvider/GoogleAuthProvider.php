@@ -9,9 +9,14 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
+/**
+ * Class GoogleAuthProvider
+ */
 class GoogleAuthProvider implements LoginProviderInterface
 {
     /**
+     * Renders the login mask for google oAuth2.
+     *
      * @param StandaloneView $view
      * @param PageRenderer $pageRenderer
      * @param LoginController $loginController

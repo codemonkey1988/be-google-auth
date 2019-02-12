@@ -3,6 +3,9 @@ namespace Codemonkey1988\BeGoogleAuth\UserProvider;
 
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
 
+/**
+ * Interface UserProviderInterface
+ */
 interface UserProviderInterface
 {
     /**
@@ -21,7 +24,7 @@ interface UserProviderInterface
     public function getUserByEmail(string $email, $respectEnableFields = true): array;
 
     /**
-     * Creates a new user with a configured user group.
+     * Creates a new user with a defined privileges.
      *
      * @param string $email
      * @param string $name
@@ -30,7 +33,7 @@ interface UserProviderInterface
     public function createUser(string $email, string $name);
 
     /**
-     * Sets the deleted flag to 0 for the given user record uid.
+     * Sets the deleted flag to 0 for the given user record.
      *
      * @param array $userRecord
      * @return void

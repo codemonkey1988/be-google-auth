@@ -3,6 +3,9 @@ namespace Codemonkey1988\BeGoogleAuth\UserProvider\Permission;
 
 use TYPO3\CMS\Core\SingletonInterface;
 
+/**
+ * Interface BackendUserPermissionInterface
+ */
 interface BackendUserPermissionInterface extends SingletonInterface
 {
     /**

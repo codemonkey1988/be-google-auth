@@ -4,6 +4,9 @@ namespace Codemonkey1988\BeGoogleAuth\Domain\Model\Dto;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Class GsuiteConfiguration
+ */
 class GsuiteConfiguration
 {
     /**

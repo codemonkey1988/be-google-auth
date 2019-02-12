@@ -14,6 +14,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
 use TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility;
 
+/**
+ * Class BackendUserProvider
+ */
 class BackendUserProvider implements UserProviderInterface
 {
     /**
@@ -57,7 +60,7 @@ class BackendUserProvider implements UserProviderInterface
     }
 
     /**
-     * Creates a new user based on a configured skeleton user.
+     * Creates a new backend user for google oAuth2 usage.
      *
      * @param string $email
      * @param string $name
@@ -90,8 +93,10 @@ class BackendUserProvider implements UserProviderInterface
     }
 
     /**
+     * Fetch an existing backend user by its email address.
+     *
      * @param string $email
-     * @param bool $respectEnableFields
+     * @param bool $respectEnableFields When false, also deleted and disabled users will be fetched.
      * @return array
      */
     public function getUserByEmail(string $email, $respectEnableFields = true): array
@@ -128,6 +133,8 @@ class BackendUserProvider implements UserProviderInterface
     }
 
     /**
+     * Sets the deleted flag to 0 for the given user record.
+     *
      * @param array $userRecord
      * @throws InvalidPermissionException
      * @return void
@@ -147,8 +154,6 @@ class BackendUserProvider implements UserProviderInterface
     }
 
     /**
-     * Generates a random password.
-     *
      * @return string
      */
     protected function generatePassword(): string

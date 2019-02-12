@@ -6,6 +6,9 @@ use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Class ConfigurationService
+ */
 class ConfigurationService implements SingletonInterface
 {
     /**
@@ -14,7 +17,7 @@ class ConfigurationService implements SingletonInterface
     protected $configuration;
 
     /**
-     * Get the current extension configuration.
+     * Returns the current extension configuration.
      *
      * @return ExtensionConfiguration
      */

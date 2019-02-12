@@ -6,6 +6,9 @@ use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Class AdminByFileBackendUserPermission
+ */
 class AdminByFileBackendUserPermission implements BackendUserPermissionInterface
 {
     /**
