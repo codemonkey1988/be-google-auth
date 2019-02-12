@@ -22,8 +22,6 @@ class GsuiteTest extends UnitTestCase
         $this->assertFalse($subject->enabled());
         $this->assertFalse($subject->isInOrganisation([]));
         $this->assertFalse($subject->isInOrganisation(['hd' => 'example.com']));
-        $this->assertFalse($subject->shouldCreateAdminUser());
-        $this->assertEmpty($subject->getUserGroupUids());
     }
 
     /**
@@ -84,40 +82,6 @@ class GsuiteTest extends UnitTestCase
         $subject->injectConfigurationService($configurationServiceMock);
 
         $this->assertTrue($subject->isInOrganisation(['hd' => 'example.com']));
-    }
-
-    /**
-     * @test
-     */
-    public function validateUserShouldBeAdmin()
-    {
-        $configurationServiceMock = $this->buildConfigurationServiceMock([
-            'gsuite.' => [
-                'adminByDefault' => true,
-            ],
-        ]);
-
-        $subject = new Gsuite();
-        $subject->injectConfigurationService($configurationServiceMock);
-
-        $this->assertTrue($subject->shouldCreateAdminUser());
-    }
-
-    /**
-     * @test
-     */
-    public function validateGetConfiguredUserGroups()
-    {
-        $configurationServiceMock = $this->buildConfigurationServiceMock([
-            'gsuite.' => [
-                'beUserGroupUids' => '1,2',
-            ],
-        ]);
-
-        $subject = new Gsuite();
-        $subject->injectConfigurationService($configurationServiceMock);
-
-        $this->assertEquals(['1', '2'], $subject->getUserGroupUids());
     }
 
     /**

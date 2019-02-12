@@ -39,14 +39,4 @@ class Gsuite implements SingletonInterface
 
         return in_array($userData['hd'], $this->configuration->getGsuite()->getOrganisations());
     }
-
-    public function shouldCreateAdminUser(): bool
-    {
-        return $this->configuration->getGsuite()->isAdminByDefault();
-    }
-
-    public function getUserGroupUids(): array
-    {
-        return $this->configuration->getGsuite()->getBeUserGroupUids();
-    }
 }
