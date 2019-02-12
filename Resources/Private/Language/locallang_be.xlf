@@ -11,7 +11,7 @@
 			</trans-unit>
 
 			<trans-unit id="em.category.gsuite" xml:space="preserve">
-				<source>GSuite</source>
+				<source>G Suite</source>
 			</trans-unit>
 			<trans-unit id="em.basic.clientId" xml:space="preserve">
 				<source>Google Client ID</source>
@@ -20,7 +20,7 @@
 				<source>Enable logging:Enables additional logging to system log during login process.</source>
 			</trans-unit>
 			<trans-unit id="em.gsuite.enable" xml:space="preserve">
-				<source>Enable Google GSuite features</source>
+				<source>Enable Google G Suite features</source>
 			</trans-unit>
 			<trans-unit id="em.gsuite.organisations" xml:space="preserve">
 				<source>Organisations:A comma-separated list of organisations. All users assigned to one of that organisation are able to login.</source>
