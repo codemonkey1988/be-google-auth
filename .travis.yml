@@ -12,7 +12,7 @@ cache:
 
 notifications:
   email:
-    - schreiner.tim@gmail.com
+    - dev@tim-schreiner.de
 
 before_install:
   - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
@@ -80,26 +80,3 @@ jobs:
     - stage: test
       php: 7.0
       env: TYPO3_VERSION=^8.7
-
-    - stage: 🚢 to TER
-      if: tag IS present
-      php: 7.0
-      install: skip
-      before_script: skip
-      script:
-        - |
-          if [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
-            echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n";
-            # Install ter client
-            composer global require helhum/ter-client
-            # Build extension files
-            rm -rf Tests/
-            rm .gitattributes
-            rm .gitignore
-            rm .php_cs.dist
-            rm .travis.yml
-            # Upload
-            TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
-            echo "Uploading release ${TRAVIS_TAG} to TER"
-            $HOME/.composer/vendor/bin/ter-client upload be_google_auth . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASSWORD" -m "$TAG_MESSAGE"
-          fi;
