@@ -93,3 +93,8 @@ If you found a **security issue** please contact me personally using one of the 
 * Twitter: [@codemonkey1988](https://twitter.com/Codemonkey1988)
 * TYPO3 Slack: timschreiner
 * Email: [dev@tim-schreiner.de](dev@tim-schreiner.de)
+
+## Special Thanks
+
+A special thanks goes to [Georg Ringer](https://montagmorgen.at/) who inspired me with this idea.
+This extension is based on his extension [google_signin](https://github.com/georgringer/google_signin/).
