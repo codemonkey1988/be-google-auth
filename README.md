@@ -11,7 +11,7 @@ managed by a G Suite Administrator account. So there is a central user managemen
 This extension can currently only be installed by composer.
 
 ```
-composer install codemonkey1988/be-google-auth
+composer require codemonkey1988/be-google-auth
 ```
 
 ## Configuration
