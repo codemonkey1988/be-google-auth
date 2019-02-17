@@ -33,3 +33,10 @@ $iconRegistry->registerIcon(
     \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
     ['source' => 'EXT:be_google_auth/Resources/Public/Icons/Logo.svg']
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Codemonkey1988\BeGoogleAuth\Task\CleanupBackendUsersTask::class] = [
+    'extension' => 'be_google_auth',
+    'title' => 'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:scheulder.task.title',
+    'description' => 'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:scheulder.task.description',
+    'additionalFields' => \Codemonkey1988\BeGoogleAuth\Task\CleanupBackendUsersFieldProvider::class,
+];
