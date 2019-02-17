@@ -12,6 +12,7 @@
         <admin>1</admin>
         <disable>0</disable>
         <deleted>0</deleted>
+        <lastlogin>1550404800</lastlogin> <!-- 02/17/2019 12:00pm (UTC) -->
         <google_oauth>1</google_oauth>
     </be_users>
     <be_users>
@@ -99,6 +100,7 @@
         <admin>1</admin>
         <disable>0</disable>
         <deleted>0</deleted>
+        <lastlogin>1550404800</lastlogin> <!-- 02/17/2019 12:00pm (UTC) -->
         <google_oauth>0</google_oauth>
     </be_users>
 </dataset>

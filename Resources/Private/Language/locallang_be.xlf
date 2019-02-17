@@ -34,6 +34,17 @@
 			<trans-unit id="em.gsuite.adminByFilePath" xml:space="preserve">
 				<source>Create admin users by email address in file:A local path or url pointing to a file that contains email addresses (one per line) that should be given admin access to the system.</source>
 			</trans-unit>
+
+			<trans-unit id="scheulder.task.field.daysSinceLastLogin" xml:space="preserve">
+				<source>Days after a Google OAuth user should be deleted</source>
+			</trans-unit>
+
+			<trans-unit id="scheulder.task.title" xml:space="preserve">
+				<source>Delete Google OAuth users</source>
+			</trans-unit>
+			<trans-unit id="scheulder.task.description" xml:space="preserve">
+				<source>Delete Google OAuth users after a given time from TYPO3.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
