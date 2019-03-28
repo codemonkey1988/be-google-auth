@@ -31,7 +31,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     public function createNewAdminUser()
     {
         $configurationService = $this->getExtensionService([
-            'gsuite.' => [
+            'gsuite' => [
                 'adminByDefault' => '1',
             ],
         ]);
@@ -63,7 +63,7 @@ class BackendUserProviderTest extends FunctionalTestCase
     public function createNewNonAdminUser()
     {
         $configurationService = $this->getExtensionService([
-            'gsuite.' => [
+            'gsuite' => [
                 'adminByDefault' => '0',
                 'beUserGroupUids' => '1,2',
             ],

@@ -24,7 +24,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
     public function isNoAdminWhenConfigured()
     {
         $subject = $this->buildSimpleBackendUserPermissionMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'adminByFilePath' => 'EXT:be_google_auth/Tests/Unit/Fixtures/adminEmails.txt',
             ],
         ]);
@@ -48,7 +48,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
     public function correctUserGroupUidsCWhenConfigured()
     {
         $subject = $this->buildSimpleBackendUserPermissionMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'beUserGroupUids' => '1,2',
             ],
         ]);

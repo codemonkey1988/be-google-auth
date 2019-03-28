@@ -24,7 +24,7 @@ class SimpleBackendUserPermissionTest extends UnitTestCase
     public function isNoAdminWhenConfigured()
     {
         $subject = $this->buildSimpleBackendUserPermissionMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'adminByDefault' => true,
             ],
         ]);
@@ -48,7 +48,7 @@ class SimpleBackendUserPermissionTest extends UnitTestCase
     public function correctUserGroupUidsCWhenConfigured()
     {
         $subject = $this->buildSimpleBackendUserPermissionMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'beUserGroupUids' => '1,2',
             ],
         ]);

@@ -76,7 +76,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'adminByDefault' => true,
                     'organisations' => 'example.com',
@@ -101,7 +101,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'adminByDefault' => true,
                     'organisations' => 'example.org',
@@ -125,7 +125,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'beUserGroupUids' => '1,2',
                     'organisations' => 'example.com',
@@ -151,7 +151,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'beUserGroupUids' => '1,2',
                     'organisations' => 'example.org',
@@ -175,7 +175,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'organisations' => 'example.com',
                 ],
@@ -200,7 +200,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
                 'hd' => 'example.com',
             ],
             [
-                'gsuite.' => [
+                'gsuite' => [
                     'enable' => true,
                     'organisations' => 'example.com',
                 ],

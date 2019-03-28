@@ -25,7 +25,7 @@ class ConfigurationServiceTest extends UnitTestCase
     {
         $testConfiguration = [
             'clientId' => 'my-client-id',
-            'gsuite.' => [
+            'gsuite' => [
                 'enable' => '1',
                 'organisations' => 'example.com',
                 'adminByDefault' => '1',

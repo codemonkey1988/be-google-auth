@@ -30,7 +30,7 @@ class GsuiteTest extends UnitTestCase
     public function validateWithEnabledGsuite()
     {
         $configurationServiceMock = $this->buildConfigurationServiceMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'enable' => true,
             ],
         ]);
@@ -73,7 +73,7 @@ class GsuiteTest extends UnitTestCase
     public function validateUserShouldBeInOrganisation()
     {
         $configurationServiceMock = $this->buildConfigurationServiceMock([
-            'gsuite.' => [
+            'gsuite' => [
                 'organisations' => 'example.com',
             ],
         ]);
