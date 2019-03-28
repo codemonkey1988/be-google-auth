@@ -34,6 +34,7 @@ class ConfigurationService implements SingletonInterface
     {
         if (version_compare(TYPO3_version, '9.5.0', '<')) {
             $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['be_google_auth'] ?? '');
+            $extensionConfiguration = GeneralUtility::removeDotsFromTS($extensionConfiguration);
         } else {
             $extensionConfiguration = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('be_google_auth');
         }

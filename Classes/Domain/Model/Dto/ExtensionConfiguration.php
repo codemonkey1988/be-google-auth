@@ -28,7 +28,7 @@ class ExtensionConfiguration
     {
         $this->clientId = (string)$configuration['clientId'] ?? '';
         $this->log = isset($configuration['log']) ? !empty($configuration['log']) : true;
-        $this->gsuite = GeneralUtility::makeInstance(GsuiteConfiguration::class, (array)$configuration['gsuite.'] ?? []);
+        $this->gsuite = GeneralUtility::makeInstance(GsuiteConfiguration::class, (array)$configuration['gsuite'] ?? []);
     }
 
     /**
