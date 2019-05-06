@@ -26,15 +26,13 @@
 
             document.getElementById('google-token').value = googleUser.getAuthResponse().id_token;
             document.getElementById('google-profile-email').innerHTML = profile.getEmail();
-            if (profile.getImageUrl() == null) {
+            if (profile.getImageUrl() == null)
                 document.getElementById("google-profile-image").style.display = "none";
-            } else {
+            else
                 document.getElementById("google-profile-image").src = profile.getImageUrl();
-            }
 
             document.getElementById('google-signin-button').style.display = 'none';
             document.getElementById('google-signed-in').removeAttribute('style');
-
         }
     </script>
 </f:section>
