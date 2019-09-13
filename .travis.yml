@@ -17,6 +17,9 @@ notifications:
 before_install:
   - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
 
+services:
+  - mysql
+
 install:
   - |
     composer require \
