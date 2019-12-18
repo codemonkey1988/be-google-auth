@@ -13,7 +13,7 @@
         <div class="col-xs-8">
             <p id="google-profile-email"></p>
             <div id="google-info-links">
-                <a href="#" class="btn btn-info" onclick="disconnect();">{f:translate(key:'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:google.disconnect')}</a>
+                <a href="#" class="btn btn-info" onclick="gapi.auth2.getAuthInstance().disconnect(); location.reload();">{f:translate(key:'LLL:EXT:be_google_auth/Resources/Private/Language/locallang_be.xlf:google.disconnect')}</a>
             </div>
         </div>
     </div>
