@@ -25,7 +25,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders']['google_auth
     ]
 );
 
-$GLOBALS['T3_SERVICES']['auth']['TYPO3\CMS\Sv\AuthenticationService']['className'] = \Codemonkey1988\BeGoogleAuth\Service\ExtendedAuthenticationService::class;
+//$GLOBALS['T3_SERVICES']['auth']['TYPO3\CMS\Sv\AuthenticationService']['className'] = \Codemonkey1988\BeGoogleAuth\Service\ExtendedAuthenticationService::class;
 
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 $iconRegistry->registerIcon(
