@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace Codemonkey1988\BeGoogleAuth\Service;
 
-use TYPO3\CMS\Sv\AuthenticationService;
+use TYPO3\CMS\Core\Authentication\AuthenticationService;
 
 /**
  * Class ExtendedAuthenticationService
