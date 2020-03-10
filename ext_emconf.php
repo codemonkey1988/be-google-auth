@@ -8,10 +8,10 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'schreiner.tim@gmail.com',
     'state' => 'beta',
     'clearCacheOnLoad' => true,
-    'version' => '0.3.0-dev',
+    'version' => '0.3.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.3.99',
+            'typo3' => '9.5.0-10.3.99',
         ],
         'conflicts' => [],
         'suggests' => [],
