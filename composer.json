@@ -19,7 +19,7 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "^8.7 || ^9.5 || ~10.3.0",
+    "typo3/cms-core": "^9.5 || ~10.3.0",
     "hackzilla/password-generator": "^1.4"
   },
   "require-dev": {
