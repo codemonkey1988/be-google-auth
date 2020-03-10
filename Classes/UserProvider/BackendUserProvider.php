@@ -9,6 +9,7 @@ use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\BackendUserPermissionInt
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
@@ -166,12 +167,26 @@ class BackendUserProvider implements UserProviderInterface
             ->setSymbols()
             ->setLength(64);
 
-        if (SaltedPasswordsUtility::isUsageEnabled()) {
+        return $this->hashPassword($generator->generatePassword());
+    }
+
+    /**
+     * @param string $plainPassword
+     * @return string
+     */
+    protected function hashPassword(string $plainPassword)
+    {
+        // Make usage of deprecated salted password extension.
+        if (class_exists(SaltedPasswordsUtility::class) && SaltedPasswordsUtility::isUsageEnabled()) {
             $objInstanceSaltedPW = SaltFactory::getSaltingInstance();
-            $password = $objInstanceSaltedPW->getHashedPassword($generator->generatePassword());
+
+            return $objInstanceSaltedPW->getHashedPassword($plainPassword);
         }
 
-        return $password;
+        $hashStrategy = GeneralUtility::makeInstance(PasswordHashFactory::class)
+            ->getDefaultHashInstance('BE');
+
+        return $hashStrategy->getHashedPassword($plainPassword);
     }
 
     /**
