@@ -37,7 +37,6 @@
     }
   },
   "replace": {
-    "be_google_auth": "self.version",
     "typo3-ter/be-google-auth": "self.version"
   },
   "config": {
