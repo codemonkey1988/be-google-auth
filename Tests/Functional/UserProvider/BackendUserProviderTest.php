@@ -26,6 +26,20 @@ class BackendUserProviderTest extends FunctionalTestCase
     ];
 
     /**
+     * Force bcrypt hashing algorithm because travis ci php 7.2 does not support argon2
+     * which is default in TYPO3 v10.
+     *
+     * @var array
+     */
+    protected $configurationToUseInTestInstance = [
+        'BE' => [
+            'passwordHashing' => [
+                'className' => \TYPO3\CMS\Core\Crypto\PasswordHashing\BcryptPasswordHash::class,
+            ],
+        ],
+    ];
+
+    /**
      * @test
      */
     public function createNewAdminUser()
