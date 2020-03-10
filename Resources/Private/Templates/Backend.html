@@ -21,6 +21,10 @@
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
+        function disconnect() {
+            gapi.auth2.getAuthInstance().disconnect();
+            location.reload();
+        }
         function onSuccess(googleUser) {
             var profile = googleUser.getBasicProfile();
 
