@@ -2,7 +2,12 @@
 declare(strict_types=1);
 namespace Codemonkey1988\BeGoogleAuth\Task;
 
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Core\Exception;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
@@ -28,7 +33,7 @@ class CleanupBackendUsersFieldProvider implements AdditionalFieldProviderInterfa
         if (!isset($taskInfo['daysSinceLastLogin'])) {
             $taskInfo['daysSinceLastLogin'] = self::FIELD_DAYS_SINCE_LAST_LOGIN_DEFAULT_VALUE;
 
-            if ($schedulerModule->CMD === 'edit') {
+            if ($schedulerModule->getCurrentAction()->equals('edit')) {
                 $taskInfo['daysSinceLastLogin'] = (int)$task->daysSinceLastLogin;
             }
         }
@@ -53,15 +58,16 @@ class CleanupBackendUsersFieldProvider implements AdditionalFieldProviderInterfa
      * @param array $submittedData
      * @param SchedulerModuleController $schedulerModule
      * @return bool
+     * @throws Exception
      */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool
     {
         if (!MathUtility::canBeInterpretedAsInteger($submittedData[self::FIELD_DAYS_SINCE_LAST_LOGIN])) {
-            $schedulerModule->addMessage($GLOBALS['LANG']->sL('Please enter an integer value.'), FlashMessage::ERROR);
+            $this->addFlashMessage($GLOBALS['LANG']->sL('Please enter an integer value.'), '', FlashMessage::ERROR);
 
             return false;
         } elseif ($submittedData[self::FIELD_DAYS_SINCE_LAST_LOGIN] < 0) {
-            $schedulerModule->addMessage($GLOBALS['LANG']->sL('Please enter a value greater or equal 0.'), FlashMessage::ERROR);
+            $this->addFlashMessage($GLOBALS['LANG']->sL('Please enter a value greater or equal 0.'), '', FlashMessage::ERROR);
 
             return false;
         }
@@ -78,5 +84,36 @@ class CleanupBackendUsersFieldProvider implements AdditionalFieldProviderInterfa
         if ($task instanceof CleanupBackendUsersTask) {
             $task->daysSinceLastLogin = (int)$submittedData[self::FIELD_DAYS_SINCE_LAST_LOGIN];
         }
+    }
+
+    /**
+     * @param $messageBody
+     * @param string $messageTitle
+     * @param int $severity
+     * @throws Exception
+     * @see ModuleTemplate::addFlashMessage()
+     */
+    protected function addFlashMessage($messageBody, $messageTitle = '', $severity = AbstractMessage::OK)
+    {
+        if (!is_string($messageBody)) {
+            throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1622835067);
+        }
+        /* @var FlashMessage $flashMessage */
+        $flashMessage = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $messageBody,
+            $messageTitle,
+            $severity,
+            true
+        );
+        $this->getFlashMessageService()->getMessageQueueByIdentifier()->enqueue($flashMessage);
+    }
+
+    /**
+     * @return FlashMessageService
+     */
+    protected function getFlashMessageService()
+    {
+        return GeneralUtility::makeInstance(FlashMessageService::class);
     }
 }
