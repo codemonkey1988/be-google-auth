@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Functional\Service;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -59,8 +67,8 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertSame(1, $user['uid']);
+        self::assertTrue(is_array($user));
+        self::assertSame(1, $user['uid']);
     }
 
     /**
@@ -75,8 +83,8 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertEmpty($user);
+        self::assertTrue(is_array($user));
+        self::assertEmpty($user);
     }
 
     /**
@@ -99,9 +107,9 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertSame('admin1@example.com', $user['email']);
-        $this->assertSame(1, $user['admin']);
+        self::assertTrue(is_array($user));
+        self::assertSame('admin1@example.com', $user['email']);
+        self::assertSame(1, $user['admin']);
     }
 
     /**
@@ -124,8 +132,8 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertEmpty($user);
+        self::assertTrue(is_array($user));
+        self::assertEmpty($user);
     }
 
     /**
@@ -148,10 +156,10 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertSame('user1@example.com', $user['email']);
-        $this->assertSame(0, $user['admin']);
-        $this->assertSame('1,2', $user['usergroup']);
+        self::assertTrue(is_array($user));
+        self::assertSame('user1@example.com', $user['email']);
+        self::assertSame(0, $user['admin']);
+        self::assertSame('1,2', $user['usergroup']);
     }
 
     /**
@@ -174,8 +182,8 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertEmpty($user);
+        self::assertTrue(is_array($user));
+        self::assertEmpty($user);
     }
 
     /**
@@ -197,10 +205,10 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
-        $this->assertSame(20, $user['uid']);
-        $this->assertSame(0, $user['admin']);
-        $this->assertSame(0, $user['deleted']);
+        self::assertTrue(is_array($user));
+        self::assertSame(20, $user['uid']);
+        self::assertSame(0, $user['admin']);
+        self::assertSame(0, $user['deleted']);
     }
 
     /**
@@ -222,7 +230,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
         );
         $user = $subject->getUser();
 
-        $this->assertTrue(is_array($user));
+        self::assertTrue(is_array($user));
         $this->assertempty($user);
     }
 
@@ -245,7 +253,7 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
 
         $googleClientMock = $this->getAccessibleMock(Client::class, ['fetchUserProfile']);
         $googleClientMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('fetchUserProfile')
             ->willReturn($googleResponse);
 
@@ -256,11 +264,11 @@ class GoogleAuthenticationServiceTest extends FunctionalTestCase
 
         $authenticationService = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken']);
         $authenticationService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getGoogleClient')
             ->willReturn($googleClientMock);
         $authenticationService
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getToken')
             ->willReturn('12345');
 

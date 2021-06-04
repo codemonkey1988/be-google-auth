@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Service;
 
 use Codemonkey1988\BeGoogleAuth\Google\Client;
@@ -48,7 +57,6 @@ class GoogleAuthenticationService extends AbstractService
      * @param array $loginData : Login data submitted by user and preprocessed by AbstractUserAuthentication
      * @param array $authenticationInformation : Additional TYPO3 information for authentication services (unused here)
      * @param AbstractUserAuthentication $parentObject Calling object
-     * @return void
      */
     public function initAuth($subType, array $loginData, array $authenticationInformation, AbstractUserAuthentication $parentObject)
     {

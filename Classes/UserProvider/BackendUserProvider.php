@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\UserProvider;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -66,7 +74,6 @@ class BackendUserProvider implements UserProviderInterface
      * @param string $email
      * @param string $name
      * @throws InvalidPermissionException
-     * @return void
      */
     public function createUser(string $email, string $name)
     {
@@ -138,7 +145,6 @@ class BackendUserProvider implements UserProviderInterface
      *
      * @param array $userRecord
      * @throws InvalidPermissionException
-     * @return void
      */
     public function restoreUser(array $userRecord)
     {

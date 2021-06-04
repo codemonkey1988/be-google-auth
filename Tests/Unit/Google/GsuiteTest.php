@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Unit\Google;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -19,9 +28,9 @@ class GsuiteTest extends UnitTestCase
         $subject = new Gsuite();
         $subject->injectConfigurationService($configurationServiceMock);
 
-        $this->assertFalse($subject->enabled());
-        $this->assertFalse($subject->isInOrganisation([]));
-        $this->assertFalse($subject->isInOrganisation(['hd' => 'example.com']));
+        self::assertFalse($subject->enabled());
+        self::assertFalse($subject->isInOrganisation([]));
+        self::assertFalse($subject->isInOrganisation(['hd' => 'example.com']));
     }
 
     /**
@@ -38,7 +47,7 @@ class GsuiteTest extends UnitTestCase
         $subject = new Gsuite();
         $subject->injectConfigurationService($configurationServiceMock);
 
-        $this->assertTrue($subject->enabled());
+        self::assertTrue($subject->enabled());
     }
 
     /**
@@ -51,7 +60,7 @@ class GsuiteTest extends UnitTestCase
         $subject = new Gsuite();
         $subject->injectConfigurationService($configurationServiceMock);
 
-        $this->assertTrue($subject->isGsuiteUser(['hd' => 'example.com']));
+        self::assertTrue($subject->isGsuiteUser(['hd' => 'example.com']));
     }
 
     /**
@@ -64,7 +73,7 @@ class GsuiteTest extends UnitTestCase
         $subject = new Gsuite();
         $subject->injectConfigurationService($configurationServiceMock);
 
-        $this->assertFalse($subject->isGsuiteUser([]));
+        self::assertFalse($subject->isGsuiteUser([]));
     }
 
     /**
@@ -81,7 +90,7 @@ class GsuiteTest extends UnitTestCase
         $subject = new Gsuite();
         $subject->injectConfigurationService($configurationServiceMock);
 
-        $this->assertTrue($subject->isInOrganisation(['hd' => 'example.com']));
+        self::assertTrue($subject->isInOrganisation(['hd' => 'example.com']));
     }
 
     /**

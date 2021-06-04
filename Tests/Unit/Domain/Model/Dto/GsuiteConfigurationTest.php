@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Unit\Domain\Model\Dto;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\GsuiteConfiguration;
@@ -14,10 +23,10 @@ class GsuiteConfigurationTest extends UnitTestCase
     {
         $subject = new GsuiteConfiguration([]);
 
-        $this->assertFalse($subject->isEnabled());
-        $this->assertFalse($subject->isAdminByDefault());
-        $this->assertEmpty($subject->getOrganisations());
-        $this->assertEmpty($subject->getBeUserGroupUids());
+        self::assertFalse($subject->isEnabled());
+        self::assertFalse($subject->isAdminByDefault());
+        self::assertEmpty($subject->getOrganisations());
+        self::assertEmpty($subject->getBeUserGroupUids());
     }
 
     /**
@@ -29,10 +38,10 @@ class GsuiteConfigurationTest extends UnitTestCase
             'enable' => true,
         ]);
 
-        $this->assertTrue($subject->isEnabled());
-        $this->assertFalse($subject->isAdminByDefault());
-        $this->assertEmpty($subject->getOrganisations());
-        $this->assertEmpty($subject->getBeUserGroupUids());
+        self::assertTrue($subject->isEnabled());
+        self::assertFalse($subject->isAdminByDefault());
+        self::assertEmpty($subject->getOrganisations());
+        self::assertEmpty($subject->getBeUserGroupUids());
     }
 
     /**
@@ -44,10 +53,10 @@ class GsuiteConfigurationTest extends UnitTestCase
             'adminByDefault' => true,
         ]);
 
-        $this->assertFalse($subject->isEnabled());
-        $this->assertTrue($subject->isAdminByDefault());
-        $this->assertEmpty($subject->getOrganisations());
-        $this->assertEmpty($subject->getBeUserGroupUids());
+        self::assertFalse($subject->isEnabled());
+        self::assertTrue($subject->isAdminByDefault());
+        self::assertEmpty($subject->getOrganisations());
+        self::assertEmpty($subject->getBeUserGroupUids());
     }
 
     /**
@@ -59,10 +68,10 @@ class GsuiteConfigurationTest extends UnitTestCase
             'organisations' => 'test.de, example.com ',
         ]);
 
-        $this->assertFalse($subject->isEnabled());
-        $this->assertFalse($subject->isAdminByDefault());
-        $this->assertEquals(['test.de', 'example.com'], $subject->getOrganisations());
-        $this->assertEmpty($subject->getBeUserGroupUids());
+        self::assertFalse($subject->isEnabled());
+        self::assertFalse($subject->isAdminByDefault());
+        self::assertEquals(['test.de', 'example.com'], $subject->getOrganisations());
+        self::assertEmpty($subject->getBeUserGroupUids());
     }
 
     /**
@@ -74,9 +83,9 @@ class GsuiteConfigurationTest extends UnitTestCase
             'beUserGroupUids' => '1, 2,10 ',
         ]);
 
-        $this->assertFalse($subject->isEnabled());
-        $this->assertFalse($subject->isAdminByDefault());
-        $this->assertEmpty($subject->getOrganisations());
-        $this->assertEquals(['1', '2', '10'], $subject->getBeUserGroupUids());
+        self::assertFalse($subject->isEnabled());
+        self::assertFalse($subject->isAdminByDefault());
+        self::assertEmpty($subject->getOrganisations());
+        self::assertEquals(['1', '2', '10'], $subject->getBeUserGroupUids());
     }
 }

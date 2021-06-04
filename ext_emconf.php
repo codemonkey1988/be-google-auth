@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Backend Google Authorization',
     'description' => 'Google oAuth2 sign in for backend users.',

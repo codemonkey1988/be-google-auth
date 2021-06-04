@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Functional\Task;
 
 use Codemonkey1988\BeGoogleAuth\Task\CleanupBackendUsersTask;
@@ -37,8 +45,8 @@ class CleanupBackendUsersTaskTest extends FunctionalTestCase
             ->method('getTimeComparison')
             ->willReturn(1550404800);
 
-        $this->assertTrue($subject->execute());
-        $this->assertSame(0, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=1 AND deleted = 0'));
+        self::assertTrue($subject->execute());
+        self::assertSame(0, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=1 AND deleted = 0'));
     }
 
     /**
@@ -51,8 +59,8 @@ class CleanupBackendUsersTaskTest extends FunctionalTestCase
             ->method('getTimeComparison')
             ->willReturn(1550404799);
 
-        $this->assertTrue($subject->execute());
-        $this->assertSame(1, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=1 AND deleted = 0'));
+        self::assertTrue($subject->execute());
+        self::assertSame(1, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=1 AND deleted = 0'));
     }
 
     /**
@@ -65,7 +73,7 @@ class CleanupBackendUsersTaskTest extends FunctionalTestCase
             ->method('getTimeComparison')
             ->willReturn(1550404800);
 
-        $this->assertTrue($subject->execute());
-        $this->assertSame(1, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=30 AND deleted = 0'));
+        self::assertTrue($subject->execute());
+        self::assertSame(1, $this->getDatabaseConnection()->selectCount('uid', 'be_users', 'uid=30 AND deleted = 0'));
     }
 }

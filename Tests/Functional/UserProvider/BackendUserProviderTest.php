@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Functional\UserProvider;
 
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
@@ -64,11 +73,11 @@ class BackendUserProviderTest extends FunctionalTestCase
             ->execute()
             ->fetchAll();
 
-        $this->assertCount(1, $users);
-        $this->assertSame(1, $users[0]['admin']);
-        $this->assertSame('Test user', $users[0]['realName']);
-        $this->assertNotEmpty($users[0]['password']);
-        $this->assertEmpty($users[0]['usergroup']);
+        self::assertCount(1, $users);
+        self::assertSame(1, $users[0]['admin']);
+        self::assertSame('Test user', $users[0]['realName']);
+        self::assertNotEmpty($users[0]['password']);
+        self::assertEmpty($users[0]['usergroup']);
     }
 
     /**
@@ -97,11 +106,11 @@ class BackendUserProviderTest extends FunctionalTestCase
             ->execute()
             ->fetchAll();
 
-        $this->assertCount(1, $users);
-        $this->assertSame(0, $users[0]['admin']);
-        $this->assertSame('Test user', $users[0]['realName']);
-        $this->assertNotEmpty($users[0]['password']);
-        $this->assertSame('1,2', $users[0]['usergroup']);
+        self::assertCount(1, $users);
+        self::assertSame(0, $users[0]['admin']);
+        self::assertSame('Test user', $users[0]['realName']);
+        self::assertNotEmpty($users[0]['password']);
+        self::assertSame('1,2', $users[0]['usergroup']);
     }
 
     /**
@@ -118,8 +127,8 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin@example.com');
 
-        $this->assertNotEmpty($user);
-        $this->assertSame(1, $user['uid']);
+        self::assertNotEmpty($user);
+        self::assertSame(1, $user['uid']);
     }
 
     /**
@@ -136,8 +145,8 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('editor@example.com');
 
-        $this->assertNotEmpty($user);
-        $this->assertSame(2, $user['uid']);
+        self::assertNotEmpty($user);
+        self::assertSame(2, $user['uid']);
     }
 
     /**
@@ -154,7 +163,7 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin_deleted@example.com');
 
-        $this->assertEmpty($user);
+        self::assertEmpty($user);
     }
 
     /**
@@ -171,7 +180,7 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin_disabled@example.com');
 
-        $this->assertEmpty($user);
+        self::assertEmpty($user);
     }
 
     /**
@@ -188,8 +197,8 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin_deleted@example.com', false);
 
-        $this->assertNotEmpty($user);
-        $this->assertSame(10, $user['uid']);
+        self::assertNotEmpty($user);
+        self::assertSame(10, $user['uid']);
     }
 
     /**
@@ -206,8 +215,8 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin_disabled@example.com', false);
 
-        $this->assertNotEmpty($user);
-        $this->assertSame(11, $user['uid']);
+        self::assertNotEmpty($user);
+        self::assertSame(11, $user['uid']);
     }
 
     /**
@@ -225,8 +234,8 @@ class BackendUserProviderTest extends FunctionalTestCase
 
         $user = $userProvider->getUserByEmail('admin_deleted@example.com');
 
-        $this->assertNotEmpty($user);
-        $this->assertSame(10, $user['uid']);
+        self::assertNotEmpty($user);
+        self::assertSame(10, $user['uid']);
     }
 
     /**

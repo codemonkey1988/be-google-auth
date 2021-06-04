@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Unit\Service;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -15,7 +24,7 @@ class ConfigurationServiceTest extends UnitTestCase
     {
         $subject = new ConfigurationService();
 
-        $this->assertInstanceOf(ExtensionConfiguration::class, $subject->getConfiguration());
+        self::assertInstanceOf(ExtensionConfiguration::class, $subject->getConfiguration());
     }
 
     /**
@@ -38,10 +47,10 @@ class ConfigurationServiceTest extends UnitTestCase
         $subject = new ConfigurationService();
         $configuration = $subject->getConfiguration();
 
-        $this->assertSame('my-client-id', $configuration->getClientId());
-        $this->assertTrue($configuration->getGsuite()->isEnabled());
-        $this->assertTrue($configuration->getGsuite()->isAdminByDefault());
-        $this->assertEquals(['example.com'], $configuration->getGsuite()->getOrganisations());
-        $this->assertEquals(['1', '2', '3'], $configuration->getGsuite()->getBeUserGroupUids());
+        self::assertSame('my-client-id', $configuration->getClientId());
+        self::assertTrue($configuration->getGsuite()->isEnabled());
+        self::assertTrue($configuration->getGsuite()->isAdminByDefault());
+        self::assertEquals(['example.com'], $configuration->getGsuite()->getOrganisations());
+        self::assertEquals(['1', '2', '3'], $configuration->getGsuite()->getBeUserGroupUids());
     }
 }

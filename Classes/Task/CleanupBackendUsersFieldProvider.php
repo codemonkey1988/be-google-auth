@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Task;
 
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
@@ -66,7 +75,8 @@ class CleanupBackendUsersFieldProvider implements AdditionalFieldProviderInterfa
             $this->addFlashMessage($GLOBALS['LANG']->sL('Please enter an integer value.'), '', FlashMessage::ERROR);
 
             return false;
-        } elseif ($submittedData[self::FIELD_DAYS_SINCE_LAST_LOGIN] < 0) {
+        }
+        if ($submittedData[self::FIELD_DAYS_SINCE_LAST_LOGIN] < 0) {
             $this->addFlashMessage($GLOBALS['LANG']->sL('Please enter a value greater or equal 0.'), '', FlashMessage::ERROR);
 
             return false;
@@ -98,7 +108,6 @@ class CleanupBackendUsersFieldProvider implements AdditionalFieldProviderInterfa
         if (!is_string($messageBody)) {
             throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1622835067);
         }
-        /* @var FlashMessage $flashMessage */
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $messageBody,

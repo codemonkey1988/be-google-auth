@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Service;
 
 use Codemonkey1988\BeGoogleAuth\Google\Client;
@@ -16,7 +25,7 @@ class GoogleAuthenticationServiceTest extends UnitTestCase
     {
         $subject = $this->getAccessibleMock(GoogleAuthenticationService::class, ['log']);
 
-        $this->assertSame(100, $subject->authUser([]));
+        self::assertSame(100, $subject->authUser([]));
     }
 
     /**
@@ -27,22 +36,22 @@ class GoogleAuthenticationServiceTest extends UnitTestCase
         $email = 'test@example.com';
         $clientMock = $this->getAccessibleMock(Client::class, ['fetchUserProfile']);
         $clientMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('fetchUserProfile')
             ->willReturn(['email' => $email]);
         $backendUserAuthentication = new BackendUserAuthentication();
 
         $subject = $this->getAccessibleMock(GoogleAuthenticationService::class, ['getGoogleClient', 'getToken', 'log']);
         $subject
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getGoogleClient')
             ->willReturn($clientMock);
         $subject
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getToken')
             ->willReturn('12345');
         $subject->initAuth('test', [], [], $backendUserAuthentication);
 
-        $this->assertSame(200, $subject->authUser(['email' => $email]));
+        self::assertSame(200, $subject->authUser(['email' => $email]));
     }
 }

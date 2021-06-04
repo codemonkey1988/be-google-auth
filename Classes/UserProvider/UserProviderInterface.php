@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\UserProvider;
 
 use Codemonkey1988\BeGoogleAuth\Service\ConfigurationService;
@@ -10,7 +18,6 @@ interface UserProviderInterface
 {
     /**
      * @param ConfigurationService $configurationService
-     * @return void
      */
     public function injectConfigurationService(ConfigurationService $configurationService);
 
@@ -28,7 +35,6 @@ interface UserProviderInterface
      *
      * @param string $email
      * @param string $name
-     * @return void
      */
     public function createUser(string $email, string $name);
 
@@ -36,7 +42,6 @@ interface UserProviderInterface
      * Sets the deleted flag to 0 for the given user record.
      *
      * @param array $userRecord
-     * @return void
      */
     public function restoreUser(array $userRecord);
 }

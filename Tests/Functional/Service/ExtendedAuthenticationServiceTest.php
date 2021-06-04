@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Functional\Service;
 
 use Codemonkey1988\BeGoogleAuth\Service\ExtendedAuthenticationService;
@@ -35,8 +43,8 @@ class ExtendedAuthenticationServiceTest extends FunctionalTestCase
         $subject = $this->buildAuthenticationService();
         $user = $subject->fetchUserRecord('admin_no_google_oauth@example.com');
 
-        $this->assertTrue(is_array($user));
-        $this->assertSame(30, $user['uid']);
+        self::assertTrue(is_array($user));
+        self::assertSame(30, $user['uid']);
     }
 
     /**
@@ -48,7 +56,7 @@ class ExtendedAuthenticationServiceTest extends FunctionalTestCase
         $subject = $this->buildAuthenticationService();
         $user = $subject->fetchUserRecord('admin@example.com');
 
-        $this->assertFalse($user);
+        self::assertFalse($user);
     }
 
     /**

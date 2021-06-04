@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Unit\UserProvider\Permission;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -15,7 +24,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
     {
         $subject = new AdminByFileBackendUserPermission();
 
-        $this->assertFalse($subject->isAdmin(''));
+        self::assertFalse($subject->isAdmin(''));
     }
 
     /**
@@ -29,7 +38,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
             ],
         ]);
 
-        $this->assertTrue($subject->isAdmin('me@test.com'));
+        self::assertTrue($subject->isAdmin('me@test.com'));
     }
 
     /**
@@ -39,7 +48,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
     {
         $subject = new AdminByFileBackendUserPermission();
 
-        $this->assertSame([], $subject->getUserGroupUids(''));
+        self::assertSame([], $subject->getUserGroupUids(''));
     }
 
     /**
@@ -53,7 +62,7 @@ class AdminByFileBackendUserPermissionTest extends UnitTestCase
             ],
         ]);
 
-        $this->assertSame([1, 2], $subject->getUserGroupUids(''));
+        self::assertSame([1, 2], $subject->getUserGroupUids(''));
     }
 
     /**

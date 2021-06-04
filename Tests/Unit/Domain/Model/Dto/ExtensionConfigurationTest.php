@@ -1,5 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the "be_google_auth" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Codemonkey1988\BeGoogleAuth\Tests\Unit\Domain\Model\Dto;
 
 use Codemonkey1988\BeGoogleAuth\Domain\Model\Dto\ExtensionConfiguration;
@@ -15,9 +24,9 @@ class ExtensionConfigurationTest extends UnitTestCase
     {
         $subject = new ExtensionConfiguration([]);
 
-        $this->assertSame('', $subject->getClientId());
-        $this->assertTrue($subject->isLog());
-        $this->assertInstanceOf(GsuiteConfiguration::class, $subject->getGsuite());
+        self::assertSame('', $subject->getClientId());
+        self::assertTrue($subject->isLog());
+        self::assertInstanceOf(GsuiteConfiguration::class, $subject->getGsuite());
     }
 
     /**
@@ -30,7 +39,7 @@ class ExtensionConfigurationTest extends UnitTestCase
             'log' => '0',
         ]);
 
-        $this->assertSame('12345', $subject->getClientId());
-        $this->assertFalse($subject->isLog());
+        self::assertSame('12345', $subject->getClientId());
+        self::assertFalse($subject->isLog());
     }
 }
