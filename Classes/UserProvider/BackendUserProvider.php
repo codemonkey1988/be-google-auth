@@ -16,9 +16,9 @@ use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\AdminByFileBackendUserPe
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\BackendUserPermissionInterface;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\InvalidPermissionException;
 use Codemonkey1988\BeGoogleAuth\UserProvider\Permission\SimpleBackendUserPermission;
-use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -72,6 +72,7 @@ class BackendUserProvider implements UserProviderInterface
      * @param string $email
      * @param string $name
      * @throws InvalidPermissionException
+     * @throws Exception
      */
     public function createUser(string $email, string $name)
     {
@@ -160,18 +161,24 @@ class BackendUserProvider implements UserProviderInterface
 
     /**
      * @return string
+     * @throws Exception
      */
     protected function generatePassword(): string
     {
-        $generator = new ComputerPasswordGenerator();
-        $generator
-            ->setUppercase()
-            ->setLowercase()
-            ->setNumbers()
-            ->setSymbols()
-            ->setLength(64);
+        $triesLeft = 5;
+        $generatedPassword = '';
+        while ($triesLeft > 0 && strlen($generatedPassword) === 0) {
+            try {
+                $generatedPassword = bin2hex(random_bytes(60));
+            } catch (\Exception $e) {
+            }
+        }
 
-        return $this->hashPassword($generator->generatePassword());
+        if (strlen($generatedPassword) === 0) {
+            throw new Exception('Could not generate random password.', 1622839550);
+        }
+
+        return $this->hashPassword($generatedPassword);
     }
 
     /**
