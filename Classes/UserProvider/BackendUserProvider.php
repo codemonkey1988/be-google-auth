@@ -20,8 +20,6 @@ use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
-use TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility;
 
 /**
  * Class BackendUserProvider
@@ -182,13 +180,6 @@ class BackendUserProvider implements UserProviderInterface
      */
     protected function hashPassword(string $plainPassword)
     {
-        // Make usage of deprecated salted password extension.
-        if (class_exists(SaltedPasswordsUtility::class) && SaltedPasswordsUtility::isUsageEnabled()) {
-            $objInstanceSaltedPW = SaltFactory::getSaltingInstance();
-
-            return $objInstanceSaltedPW->getHashedPassword($plainPassword);
-        }
-
         $hashStrategy = GeneralUtility::makeInstance(PasswordHashFactory::class)
             ->getDefaultHashInstance('BE');
 
