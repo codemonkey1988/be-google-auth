@@ -192,8 +192,6 @@ class BackendUserProvider implements UserProviderInterface
      */
     protected function getBackendUserPermission(): BackendUserPermissionInterface
     {
-        $providerClass = null;
-
         if ($this->extensionConfiguration->getGsuite()->isEnabled() &&
             $this->extensionConfiguration->getGsuite()->getAdminByFilePath()) {
             $providerClass = AdminByFileBackendUserPermission::class;
